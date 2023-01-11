@@ -115,7 +115,7 @@ public class ProductController {
     //findbyid metot
     @GetMapping("/findbyid/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.findById(id));
+        return ResponseEntity.ok(productService.findById(id).get());
 
     }
 

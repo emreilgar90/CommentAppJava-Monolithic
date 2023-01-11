@@ -112,11 +112,11 @@ public class ProductService {
     }
 
     /*FindById*/
-    public Product findById(Long id) {
+    public Optional<Product> findById(Long id) {
 
         Optional<Product> product = productRepository.findById(id);
         if (product.isPresent()) {
-            return product.get();
+            return product;
         } else {
             throw new CommentAppException(ErrorType.PRODUCT_NOT_FOUND);
         }

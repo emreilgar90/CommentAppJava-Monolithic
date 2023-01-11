@@ -75,7 +75,7 @@ public class UserController {
     //findbyid metot
     @GetMapping("/findbyid/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.findById(id));
+        return ResponseEntity.ok(userService.findById(id).get());
 
     }
 

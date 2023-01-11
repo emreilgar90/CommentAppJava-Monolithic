@@ -103,10 +103,10 @@ public class UserService {
 
     /*************USER için FINDBYID METODU **************************/
 
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            return user.get();
+            return user;
 
         } else {
             throw new CommentAppException(ErrorType.USER_NOT_FOUND);

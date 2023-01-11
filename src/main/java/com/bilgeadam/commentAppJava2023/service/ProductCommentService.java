@@ -5,6 +5,7 @@ import com.bilgeadam.commentAppJava2023.exception.ErrorType;
 import com.bilgeadam.commentAppJava2023.repository.IProductCommentRepository;
 import com.bilgeadam.commentAppJava2023.repository.entity.Product;
 import com.bilgeadam.commentAppJava2023.repository.entity.ProductComment;
+import com.bilgeadam.commentAppJava2023.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ import java.util.Optional;
 public class ProductCommentService {
     private final IProductCommentRepository productCommentRepository;
 
-    private final ProductService productService;
+    private final ProductService productService; //service service ulaşacak ki diğer service in repositorysinden faydalansın
+
 
     private final UserService userService;
 
@@ -96,9 +98,30 @@ public class ProductCommentService {
 
     }
 
-
     public ProductComment save(String comment, long productId, long userId) {
-        Optional<Product>
+        Optional<Product> product = productService.findById(productId);
+        Optional<User> user = userService.findById(userId);  //iki metot da productcommentService'in içerisine
+        //productservice ve userService in enjekte ettik dolayısıyla metotların throw ile hata forlatlamaları var.
+        //tekrar hata yakalamanın anlamı yok !
+        if (product.isPresent() && user.isPresent()) {
+            try {
+                return productCommentRepository.save(ProductComment.builder()
+                        .comment(comment)
+                        .productId(productId)
+                        .userId(userId)
+                        .build());
+            } catch (Exception e) {
+                    throw new CommentAppException(ErrorType.PRODUCTCOMMENT_NOT_CREATED,e.getMessage());
+            }else{
+                throw new CommentAppException(ErrorType.PRODUCTCOMMENT_NOT_CREATED);
+
+
+
+            }
+
+
+        }
+
 
     }
 }

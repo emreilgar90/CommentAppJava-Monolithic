@@ -78,8 +78,8 @@ public class ProductCommentController {
 
 
     @GetMapping("/save")
-    public ResponseEntity<ProductComment> save(String comment, long productId, long userId){
-        return ResponseEntity.ok(productCommentService.save(comment,productId,userId))
+    public ResponseEntity<ProductComment> save(String comment, long productId, long userId) {
+        return ResponseEntity.ok(productCommentService.save(comment, productId, userId));
     }
 
 
