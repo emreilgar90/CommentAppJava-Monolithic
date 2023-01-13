@@ -1,7 +1,7 @@
 package com.bilgeadam.commentAppJava2023.utility;
 
 import com.bilgeadam.commentAppJava2023.repository.entity.EUserType;
-import com.bilgeadam.commentAppJava2023.repository.entity.Like;
+import com.bilgeadam.commentAppJava2023.repository.entity.Product;
 import com.bilgeadam.commentAppJava2023.repository.entity.ProductComment;
 import com.bilgeadam.commentAppJava2023.repository.entity.User;
 import com.bilgeadam.commentAppJava2023.service.LikeService;
@@ -27,10 +27,11 @@ public class DataImpl {
     @PostConstruct
     public void loadData() {
         createUser();
-        // createproduct();
+        createproduct();
         createproductComment();
-        createLikes();
+        //createLikes();
     }
+
 
     public void createUser() {
 
@@ -48,7 +49,7 @@ public class DataImpl {
                 surName("Öztürk").userType(EUserType.ADMIN).password("admin").phone("123").build();
         userService.saveAll(List.of(user, user1, user2, user3, user4, user5));
     }
-/*
+
     private void createproduct() {
         Product product = Product.builder().name("Monster NoteBook").price(15000).build();
         Product product1 = Product.builder().name("Sutas Ayran").expirationDate(LocalDate.now().plusDays(7)).price(15).build();
@@ -61,7 +62,7 @@ public class DataImpl {
         Product product8 = Product.builder().name("Banvit Tavuk").expirationDate(LocalDate.now().plusDays(5)).price(15).build();
         Product product9 = Product.builder().name("Pak  Maya").expirationDate(LocalDate.now().plusDays(120)).price(15).build();
         productService.saveAll(List.of(product, product1, product2, product3, product4, product5, product6, product7, product8, product9));
-
+/*
         ProductComment pc1 = ProductComment.builder().comment("begendim").product(product1).user(user).commentDate(LocalDate.now().minusMonths(3)).build();
         ProductComment pc2 = ProductComment.builder().comment("cok guzel bir bilgisayar").product(product).user(user1).commentDate(LocalDate.now().minusMonths(10)).build();
         ProductComment pc3 = ProductComment.builder().comment("fazla begenmedim idare eder").product(product).user(user2).commentDate(LocalDate.now().minusMonths(1)).build();
@@ -72,9 +73,9 @@ public class DataImpl {
         ProductComment pc8 = ProductComment.builder().comment("kotu bir urun").product(product5).user(user3).commentDate(LocalDate.now().minusDays(3)).build();
         ProductComment pc9 = ProductComment.builder().comment("cok guzel").product(product6).user(user2).commentDate(LocalDate.now().minusDays(266)).build();
         ProductComment pc10 = ProductComment.builder().comment("begendim").product(product7).user(user).commentDate(LocalDate.now().minusYears(1)).build();
-        productCommentService.saveAll(List.of(pc1, pc2, pc3, pc4, pc5, pc6, pc7, pc8, pc9, pc10));
+        productCommentService.saveAll(List.of(pc1, pc2, pc3, pc4, pc5, pc6, pc7, pc8, pc9, pc10));*/
 
-    }*/
+    }
 
     public void createproductComment() {
         ProductComment pc1 = ProductComment.builder().comment("begendim").productId(1L).userId(1L).commentDate(LocalDate.now().minusMonths(3)).build();
@@ -90,7 +91,7 @@ public class DataImpl {
         productCommentService.saveAll(List.of(pc1, pc2, pc3, pc4, pc5, pc6, pc7, pc8, pc9, pc10));
     }
 
-    public void createLikes() {
+   /* public void createLikes() {
         Like like = Like.builder().likedDate(LocalDate.now().minusMonths(1)).userId(1L).productId(1L).build();
         Like like2 = Like.builder().likedDate(LocalDate.now().minusMonths(5)).userId(1L).productId(8L).build();
         Like like3 = Like.builder().likedDate(LocalDate.now().minusYears(1)).userId(1L).productId(7L).build();
@@ -105,5 +106,5 @@ public class DataImpl {
         Like like12 = Like.builder().likedDate(LocalDate.now().minusWeeks(31)).userId(4L).productId(8L).build();
         likeService.saveAll(List.of(like, like2, like3, like4, like5, like6, like7, like8, like9, like10, like11, like12));
 
-    }
+    }*/
 }

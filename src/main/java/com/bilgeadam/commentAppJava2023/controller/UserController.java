@@ -86,4 +86,16 @@ public class UserController {
     }
 
 
+    @GetMapping("/addfavproduct")  //ürün eklemek için userid ve productid ye ihtiyacın var
+    public void addFavProduct(long userId, long productId) {
+        userService.addFavProduct(userId, productId);
+    }
+
+    @GetMapping("/getfavproduct")       //favori ürünlerini getirmek için userid ye ihtiyacın var !
+    public ResponseEntity<List<Long>> getFavProduct(long userId) {
+        return ResponseEntity.ok(userService.getFavProduct(userId));
+
+    }
+
+
 }

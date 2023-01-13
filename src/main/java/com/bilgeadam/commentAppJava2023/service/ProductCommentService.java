@@ -111,17 +111,16 @@ public class ProductCommentService {
                         .userId(userId)
                         .build());
             } catch (Exception e) {
-                    throw new CommentAppException(ErrorType.PRODUCTCOMMENT_NOT_CREATED,e.getMessage());
-            }else{
-                throw new CommentAppException(ErrorType.PRODUCTCOMMENT_NOT_CREATED);
-
-
-
+                throw new RuntimeException(e.getMessage());
             }
+        } else {
+            throw new CommentAppException(ErrorType.PRODUCTCOMMENT_NOT_CREATED);
 
 
         }
 
 
     }
+
+
 }

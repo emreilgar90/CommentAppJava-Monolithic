@@ -3,6 +3,7 @@ package com.bilgeadam.commentAppJava2023.service;
 import com.bilgeadam.commentAppJava2023.exception.CommentAppException;
 import com.bilgeadam.commentAppJava2023.exception.ErrorType;
 import com.bilgeadam.commentAppJava2023.repository.IUserRepository;
+import com.bilgeadam.commentAppJava2023.repository.entity.Product;
 import com.bilgeadam.commentAppJava2023.repository.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class UserService {
     //isPresent = varsa
     private final IUserRepository userRepository;
+    private final ProductService productService;
 
     //1.Kullanıcıları isme göre sıralı getir.
     public List<User> findOrderByName() {
@@ -127,8 +129,46 @@ public class UserService {
 
     /************************************************************************/
     public void saveAll(List<User> user) {
+
         userRepository.saveAll(user);
     }
+
+
+    /************************************************************************/
+    //Her User ın farklı favori listesi var bunun için metot yazıyoruz.Listeliyor.
+    public List<Long> getFavProduct(long userId) {
+        Optional<User> user = userRepository.findById(userId);//verilen id ye göre ara
+        if (user.isEmpty()) { //isEmpty = yoksa hata fırlatsın.
+            throw new CommentAppException(ErrorType.USER_NOT_FOUND); //yoksa hata fırlat
+        } else {                                                      //varsa getir.
+            return user.get().getFavProduct();
+        }
+
+
+    }
+
+
+    public void addFavProduct(long userId, long productId) {
+        Optional<Product> product = productService.findById(productId);
+        Optional<User> user = userRepository.findById(userId);//verilen id ye göre ara
+        if (user.isEmpty()) { //isEmpty = yoksa hata fırlatsın.
+            throw new CommentAppException(ErrorType.USER_NOT_FOUND);
+        }
+        if (product.isEmpty()) {
+            throw new CommentAppException(ErrorType.PRODUCT_NOT_FOUND);
+        }
+
+        //FAVORİYE DAHA ÖNCE ALINAN ÜRÜNÜ UYARAN METOT,ÜRÜN ZATEN VAR UYARISI VERİYOR.
+        if (user.get().getFavProduct().contains(productId)) {
+            throw new CommentAppException(ErrorType.PRODUCT_ALREADY_EXİSTS_IN_FAVORITE_LIST);
+        } else {
+            user.get().getFavProduct().add(productId);
+            userRepository.save(user.get());
+        }
+
+
+    }
+
 
     //HAZIR GELEN METODLARI SERVICEden başlatabilirsin Repository e gerek yok!
 }

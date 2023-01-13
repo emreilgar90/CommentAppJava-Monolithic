@@ -18,14 +18,13 @@ public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    //private long userId; //hangi kullanıcı like attı
+    //private long userId; //hangi kullanıcı like attı, User user2ı yaptıktan sonra yoruma aldım.
     private long productId;  //hangi ürün like landı.
+
     @Builder.Default
     private LocalDate likedDate = LocalDate.now(); //now ile kullanıldığı zamanı alabiliyoruz.
 
-    @ManyToOne  //çok like ın tek user ı olur.
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-
+    private User user; //bir like'ın bir user ı olacak
 }
